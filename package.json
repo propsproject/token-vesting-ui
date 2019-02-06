@@ -8,6 +8,7 @@
     "chart.js": "^2.7.0",
     "ethereumjs-testrpc": "^6.0.3",
     "moment": "^2.19.1",
+    "openzeppelin-eth": "2.0.2",
     "react": "^16.0.0",
     "react-bootstrap": "^0.31.3",
     "react-chartjs-2": "^2.6.4",
@@ -15,10 +16,12 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
     "require-symlink": "^0.2.0",
-    "truffle": "^3.4.11",
-    "truffle-contract": "^1.1.11",
-    "web3": "^1.0.0-beta.23",
-    "zeppelin-solidity": "git+https://git@github.com/OpenZeppelin/zeppelin-solidity.git#8e01dd14f9211239213ae7bd4c6af92dd18d4ab7"
+    "truffle": "^4.1.13",
+    "truffle-contract": "^2.0.5",
+    "truffle-hdwallet-provider": "^1.0.3",
+    "web3": "^1.0.0-beta.33",
+    "zeppelin-solidity": "^1.6.0",
+    "zos-lib": "^2.1.2"
   },
   "scripts": {
     "start": "require-link && react-scripts start",
