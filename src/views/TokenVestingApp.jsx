@@ -9,6 +9,7 @@ import VestingSchedule from './VestingSchedule'
 import Spinner from './Spinner'
 
 import '../stylesheets/TokenVestingApp.css'
+import Network from '../network';
 
 
 class TokenVestingApp extends Component {
@@ -55,6 +56,24 @@ class TokenVestingApp extends Component {
     this.setState({ loading })
   }
 
+  async getVestedAmount(start, duration, cliff, total) {    
+    let totalBalance = total;   
+    const web3 = await Network.web3(); 
+    const latestBlock = await web3.eth.getBlock('latest');    
+    const timestamp =latestBlock.timestamp;
+    
+    // console.log(`cliff=${cliff},timestamp=${timestamp}, start=${start}, duration=${duration}, start+duration=${start.plus(duration)}`);
+    // console.log(`cliff=${typeof cliff},timestamp=${typeof timestamp}, start=${typeof start}, duration=${typeof duration}, start+duration=${start.plus(duration)}`);
+    if (timestamp < cliff) { 
+      console.log('less than cliff');
+      return 0;
+    } else if (timestamp >= start.plus(duration)) {
+      return totalBalance;
+    } else {
+      return totalBalance.times(timestamp-start).div(duration);
+    }
+  }
+
   async getData() {
     const { address, token } = this.props
 
@@ -68,14 +87,15 @@ class TokenVestingApp extends Component {
     const balance  = await tokenContract.balanceOf(address)
     const released = await tokenVesting.released(token)
     const total = balance.plus(released)
+    const cliff = await tokenVesting.cliff();
 
     this.setState({
       start,
       end,
-      cliff: await tokenVesting.cliff(),
+      cliff,
       total,
       released,
-      vested: await tokenVesting.vestedAmount(token),
+      vested: await this.getVestedAmount(start, duration, cliff, total),
       decimals: await tokenContract.decimals(),
       beneficiary: await tokenVesting.beneficiary(),
       owner: await tokenVesting.owner(),
