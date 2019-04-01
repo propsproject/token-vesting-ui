@@ -28,7 +28,7 @@ class VestingDetails extends Component {
   }
 
   render() {
-    const { start, cliff, end, total, released, vested, revocable, beneficiary } = this.props.details
+    const { start, cliff, end, total, released, vested, revocable, beneficiary, grandTotal } = this.props.details
     const releasable = vested ? vested - released : null
 
     return <div className="details">
@@ -51,6 +51,10 @@ class VestingDetails extends Component {
             { this.formatDate(end) }
           </TableRow>
           
+          <TableRow title="Total tokens">
+            { this.formatTokens(grandTotal) }
+          </TableRow>
+
           <TableRow title="Total vesting">
             { this.formatTokens(total) }
           </TableRow>
@@ -104,6 +108,9 @@ class VestingDetails extends Component {
   }
 
   async onRelease() {
+    if (window.usingInfura) {
+      alert('In order to release, please connect the MetaMask Extension with your wallet');
+    }
     const { token } = this.props
     const { accounts } = this.state
     const tokenVesting = await this.getTokenVesting()

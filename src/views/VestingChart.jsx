@@ -55,10 +55,9 @@ class VestingChart extends Component {
   }
 
   getAmountAt(date) {
-    const { total, start, end, decimals } = this.props.details
-    const slope = (date - start) / (end - start)
-
-    return displayAmount(total, decimals) * slope
+    const { total, start, end, decimals, transferred} = this.props.details
+    const slope = (date - start) / (end - start)            
+    return (displayAmount(total, decimals) * slope) + displayAmount(transferred, decimals);
   }
 
   chartOptions() {
@@ -80,6 +79,9 @@ class VestingChart extends Component {
           scaleLabel: {
             display: true,
             labelString: this.props.details.symbol || ''
+          },
+          ticks: {
+            beginAtZero: true
           }
         }]
       },

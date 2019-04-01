@@ -75,11 +75,9 @@ class TokenVestingApp extends Component {
   }
 
   async getData() {
-    const { address, token } = this.props
-
+    const { address, token, percent } = this.props    
     const tokenVesting = await getTokenVesting(address)
     const tokenContract = await getSimpleToken(token)
-
     const start = await tokenVesting.start()
     const duration = await tokenVesting.duration()
     const end = start.plus(duration)
@@ -87,14 +85,17 @@ class TokenVestingApp extends Component {
     const balance  = await tokenContract.balanceOf(address)
     const released = await tokenVesting.released(token)
     const total = balance.plus(released)
-    const cliff = await tokenVesting.cliff();
-
+    const grandTotal = (percent > 0 ? total.times(100).div(percent) : 0);
+    const transferred = grandTotal.minus(total);
+    const cliff = await tokenVesting.cliff();    
     this.setState({
       start,
       end,
       cliff,
+      transferred,
+      grandTotal,
       total,
-      released,
+      released,      
       vested: await this.getVestedAmount(start, duration, cliff, total),
       decimals: await tokenContract.decimals(),
       beneficiary: await tokenVesting.beneficiary(),
