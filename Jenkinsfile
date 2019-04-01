@@ -4,7 +4,7 @@ node {
   def repository = "token-vesting-ui"
 
   def error = null
-  def environment = "www"
+  def environment = "vesting"
 
   try {
       timeout(time:120, uint: 'MINUTES') {
