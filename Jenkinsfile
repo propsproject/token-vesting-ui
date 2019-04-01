@@ -56,7 +56,8 @@ def setupEnvironment(repository, key, secret) {
 
 def buildJS(environment) {
   return stage('Building Javascript') {    
-      npm install
+      sh "npm install"
+      sh "npm run build"
   }
 }
 
