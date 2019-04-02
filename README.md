@@ -87,3 +87,21 @@ SimpleToken: 0x4500ab575934d13be4a75023508ac602a001d409
 
 ### 6. Ready!
 Go to `http://localhost:3000/<token-vesting-address>/<erc20-token-address>` and interact with the contract!
+
+
+### PROPS changes
+
+#### Start a local server
+
+```
+$ npm run compile (only the first time)
+$ npm run start
+```
+
+#### For jenkins
+
+```
+$ npm run build
+```
+
+This will also run the compile step

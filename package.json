@@ -19,13 +19,15 @@
     "truffle": "^4.1.13",
     "truffle-contract": "^2.0.5",
     "truffle-hdwallet-provider": "^1.0.3",
-    "web3": "^1.0.0-beta.33",
+    "web3": "1.0.0-beta.33",
     "zeppelin-solidity": "^1.6.0",
     "zos-lib": "^2.1.2"
   },
   "scripts": {
     "start": "require-link && react-scripts start",
-    "build": "require-link && react-scripts build",
+    "build": "npm run compile && require-link && react-scripts build",
+    "postinstall": "cp openzeppelin-eth-modified/ERC20.sol node_modules/openzeppelin-eth/contracts/token/ERC20/ERC20.sol",
+    "compile": "npx truffle compile",
     "test": "require-link && react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
