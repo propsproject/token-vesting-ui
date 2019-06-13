@@ -14,13 +14,13 @@ node {
         setupEnvironment(repository, KEY, SECRET)
       }
 
-      announceFlow("Full flow, targeting ${environment}")      
+      announceFlow("Full flow, targeting ${environment}")
       buildJS(environment)
       deployToS3(environment, bucket)
       withCredentials([string(credentialsId: 'jenkins-vesting-cloudfront-distribution-id', variable: 'D_ID')]) {
         createCloudFrontInvalidation(D_ID)
       }
-      
+
       slackSend color: 'good', message: "@${env.AUTHOR} → *${env.SLACK_NAME}* was deployed to *${environment}*."
 
       currentBuild.result = "SUCCESS"
@@ -55,7 +55,7 @@ def setupEnvironment(repository, key, secret) {
 }
 
 def buildJS(environment) {
-  return stage('Building Javascript') {    
+  return stage('Building Javascript') {
       sh "npm install"
       sh "npm run build"
   }
@@ -82,7 +82,7 @@ def announceFlow(flow) {
 
 def createCloudFrontInvalidation(distributionId) {
   return stage("Create CloudFront Invalidation ${distributionId}") {
-    sh "aws cloudfront create-invalidation --distribution-id ${distributionId} --paths /*"
+    sh "aws cloudfront create-invalidation --distribution-id ${distributionId} --paths /"
   }
 }
 
