@@ -19,11 +19,8 @@ const Network = {
     let { web3 } = window
     let counter = 0;
     while (web3 === undefined) {
-      Network.log("Waiting for web3")
-      await sleep(500)
-      web3 = window.web3
       counter += 1;
-      if (counter > 1) {
+      if (counter === 1) {
         window.usingInfura = true;
         web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/5dc6c261be734a60b0475ef178d0cb6b"));
         let contract = Contract(artifcats);
@@ -37,6 +34,8 @@ const Network = {
           };
         }
       }
+      Network.log("Waiting for web3")
+      await sleep(500)
     }
 
     return web3.currentProvider;
