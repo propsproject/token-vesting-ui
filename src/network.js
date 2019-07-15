@@ -17,6 +17,17 @@ const Network = {
   async provider() {
     
     let { web3 } = window
+
+    if (window.ethereum) {
+      web3 = new window.Web3(window.ethereum);
+      try {
+        // Request account access if needed
+        await window.ethereum.enable();
+      } catch (error) {
+        // User denied account access...
+      }
+    }
+
     let counter = 0;
     while (web3 === undefined) {
       counter += 1;
