@@ -115,7 +115,7 @@ class VestingDetails extends Component {
     const { token } = this.props
     const { accounts } = this.state
     const tokenVesting = await this.getTokenVesting()
-    console.log(accounts);
+    
     if(!accounts[0]) {
       alert('Please make sure your Metamask is unlocked, then refresh the page');
       return;
@@ -126,7 +126,6 @@ class VestingDetails extends Component {
       await tokenVesting.release(token, { from: accounts[0] })
       this.props.getData()
     } catch (e) {
-      console.log(e);
       this.stopLoader()
     }
   }
