@@ -109,11 +109,17 @@ class VestingDetails extends Component {
 
   async onRelease() {
     if (window.usingInfura) {
-      alert('In order to release, please connect the MetaMask Extension with your wallet');
+      alert('In order to release, you need the MetaMask Extension. Please install, then refresh and try again.');
+      return;
     }
     const { token } = this.props
     const { accounts } = this.state
     const tokenVesting = await this.getTokenVesting()
+    
+    if(!accounts[0]) {
+      alert('Please make sure your Metamask is unlocked, then refresh the page');
+      return;
+    }
 
     try {
       this.startLoader()
