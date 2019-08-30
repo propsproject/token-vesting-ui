@@ -33,7 +33,7 @@ const Network = {
       counter += 1;
       if (counter === 1) {
         window.usingInfura = true;
-        web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/5dc6c261be734a60b0475ef178d0cb6b"));
+        web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/b815bd3390fa468eaeb726eb7f6215c0"));
         let contract = Contract(artifcats);
         contract.setProvider(web3.currentProvider);
         //dirty hack for web3@1.0.0 support for localhost testrpc, see https://github.com/trufflesuite/truffle-contract/issues/56#issuecomment-331084530
